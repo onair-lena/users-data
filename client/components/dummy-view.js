@@ -1,54 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { bindActionCreators } from 'redux'
 import Head from './head'
 
 const Dummy = () => {
-  const initialState = {
-    firstName: '',
-    lastName: '',
-    Age: 0
-  }
-
-  const getUsers = () => {axios('https://randomuser.me/api/?results=10').then((data) => console.log(data.data.results))// eslint-disable-line
-  }
-  // const [count, setCount] = useState(0)
-  // console.log(initialState)// eslint-disable-line
-  getUsers()
+  const [users, setUsers] = useState([]) // eslint-disable-line
+  const getUsers = () =>
+    axios('https://randomuser.me/api/?results=10').then((item) => {
+      return setUsers(item.data.results)
+    })
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   return (
-    <div>
+    <div className="w-3/4 border border-solid border-gray-800">
       <Head title="Hello" />
-      <div>
-        <div className="grid grid-cols-4 gap-4 flex flex-row justify-left mt-4">
-          <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
-            <input type="checkbox" />
+      <div className="items-center">
+        <div className="flex flex-row justify-around text-center">
+          <div className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2">
+            <input type="checkbox" className="text-center" />
           </div>
-          <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
+          <div className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2">
             First Name
           </div>
-          <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
+          <div className="border border-solid border-gray-800 min-w-200 text-black font-bold shadow-lg p-2 m-2">
             Second Name
           </div>
-          <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
+          <div className="border border-solid border-gray-800 min-w-66 text-black font-bold shadow-lg p-2 m-2">
             Age
           </div>
         </div>
       </div>
-      <div className=" grid grid-cols-4 gap-4 flex flex-row justify-left mt-4">
-        <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
-          <input type="checkbox" />
+      {users.map((it) => (
+        <div className="flex flex-row justify-around text-center">
+          <div className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2">
+            <input type="checkbox" />
+          </div>
+          <div className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2">
+            {it.name.first}
+          </div>
+          <div className="border border-solid border-gray-800 min-w-200 text-black font-bold shadow-lg p-2 m-2">
+            {it.name.last}
+          </div>
+          <div className="border border-solid border-gray-800 min-w-66 text-black font-bold shadow-lg p-2 m-2">
+            {it.dob.age}
+          </div>
         </div>
-        <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
-          it
-        </div>
-        <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
-          {initialState.d}
-        </div>
-        <div className="border border-solid border-gray-800 text-black font-bold border shadow-lg p-4 m-2">
-          it
-        </div>
+      ))}
+      <div className="border border-solid border-gray-800 w-full text-black font-bold shadow-lg p-4">
+        1
       </div>
     </div>
   )
