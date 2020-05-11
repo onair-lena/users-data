@@ -14,11 +14,20 @@ const Dummy = () => {
     getUsers()
   }, [])
 
-  const [checked, getChecked] = useState(false)
-  const getInputChecked = () => {
-    return getChecked(!checked)
+  const checkboxData = users.map((it, index) => {
+    return {
+      id: `checkbox${index}`,
+      firstName: it.name.first,
+      lastName: it.name.last,
+      age: it.dob.age
+    }
+  })
+
+  const [checked, setChecked] = useState(false)
+  const getInputChecked = (e) => {
+    setChecked(e.target.value)
   }
-  console.log(users)// eslint-disable-line
+  console.log(checkboxData)// eslint-disable-line
 
   return (
     <div className="w-3/4 border border-solid border-gray-800">
@@ -39,19 +48,19 @@ const Dummy = () => {
           </div>
         </div>
       </div>
-      {users.map((it) => (
+      {checkboxData.map((it) => (
         <div className="flex flex-row justify-around text-center">
           <div className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2">
-            <input type="checkbox" checked={checked} onChange={() => getInputChecked()} />
+            <input type="checkbox" checked={checked} id={it.id} onChange={getInputChecked} />
           </div>
           <div className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2">
-            {it.name.first}
+            {it.firstName}
           </div>
           <div className="border border-solid border-gray-800 min-w-200 text-black font-bold shadow-lg p-2 m-2">
-            {it.name.last}
+            {it.lastName}
           </div>
           <div className="border border-solid border-gray-800 min-w-66 text-black font-bold shadow-lg p-2 m-2">
-            {it.dob.age}
+            {it.age}
           </div>
         </div>
       ))}
