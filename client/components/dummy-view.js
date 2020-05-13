@@ -4,30 +4,62 @@ import axios from 'axios'
 import { bindActionCreators } from 'redux'
 import Head from './head'
 
-const Dummy = () => {
+const DummyView = () => {
   const [users, setUsers] = useState([])
+
+  // useEffect(() => {
+  //   axios('https://randomuser.me/api/?results=10').then((item) => {
+  //     setUsers(item.data.results)
+  //   })
+  // }, [])// eslint-disable-line
+
+  // const checkArray = users.map((it, index) => {
+  //   return {
+  //     id: `checkbox${index}`,
+  //     firstName: it.name.first,
+  //     lastName: it.name.last,
+  //     age: it.dob.age,
+  //     active: false
+  //   }
+  // })
+
   const getUsers = () =>
-    axios('https://randomuser.me/api/?results=10').then((item) => {
-      return setUsers(item.data.results)
-    })
+    axios('https://randomuser.me/api/?results=10')
+      .then((item) => item.data.results)
+      .then((item2) =>
+        setUsers(
+          item2.map((it, index) => {
+            return {
+              id: `checkbox${index}`,
+              firstName: it.name.first,
+              lastName: it.name.last,
+              age: it.dob.age
+            }
+          })
+        )
+      )
+
   useEffect(() => {
     getUsers()
-  }, [])
+  }, []) // eslint-disable-line
 
-  const checkboxData = users.map((it, index) => {
-    return {
-      id: `checkbox${index}`,
-      firstName: it.name.first,
-      lastName: it.name.last,
-      age: it.dob.age
-    }
-  })
+  // const checkArray = users.map((it, index) => {
+  //   return {
+  //     id: `checkbox${index}`,
+  //     firstName: it.name.first,
+  //     lastName: it.name.last,
+  //     age: it.dob.age
+  //   }
+  // })
 
-  const [checked, setChecked] = useState(false)
-  const getInputChecked = (e) => {
-    setChecked(e.target.value)
+  // const [checked, setChecked] = useState(false)// eslint-disable-line
+  const getInputChecked = () => {
+    // const checked = e.target.value
+    // setUsers(checkArray.map((data) => {
+    // return
+    // }
   }
-  console.log(checkboxData)// eslint-disable-line
+  console.log(users) // eslint-disable-line
 
   return (
     <div className="w-3/4 border border-solid border-gray-800">
@@ -48,10 +80,15 @@ const Dummy = () => {
           </div>
         </div>
       </div>
-      {checkboxData.map((it) => (
+      {users.map((it) => (
         <div className="flex flex-row justify-around text-center">
           <div className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2">
-            <input type="checkbox" checked={checked} id={it.id} onChange={getInputChecked} />
+            <input
+              type="checkbox"
+              checked={it.active}
+              id={it.id}
+              onChange={getInputChecked} // eslint-disable-line
+            />
           </div>
           <div className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2">
             {it.firstName}
@@ -71,10 +108,10 @@ const Dummy = () => {
   )
 }
 
-Dummy.propTypes = {}
+DummyView.propTypes = {}
 
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dummy)
+export default connect(mapStateToProps, mapDispatchToProps)(DummyView)
