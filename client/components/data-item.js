@@ -1,3 +1,5 @@
+//  НЕ РАБОТАЕТ СМ. DUMMY
+
 import React from 'react'
 
 const DataItem = (props) => {

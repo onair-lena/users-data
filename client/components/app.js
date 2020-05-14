@@ -1,3 +1,5 @@
+//  НЕ РАБОТАЕТ СМ. DUMMY
+
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Head from './head'

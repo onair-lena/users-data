@@ -7,22 +7,6 @@ import Head from './head'
 const DummyView = () => {
   const [users, setUsers] = useState([])
 
-  // useEffect(() => {
-  //   axios('https://randomuser.me/api/?results=10').then((item) => {
-  //     setUsers(item.data.results)
-  //   })
-  // }, [])// eslint-disable-line
-
-  // const checkArray = users.map((it, index) => {
-  //   return {
-  //     id: `checkbox${index}`,
-  //     firstName: it.name.first,
-  //     lastName: it.name.last,
-  //     age: it.dob.age,
-  //     active: false
-  //   }
-  // })
-
   const getUsers = () =>
     axios('https://randomuser.me/api/?results=10')
       .then((item) => item.data.results)
@@ -33,7 +17,8 @@ const DummyView = () => {
               id: `checkbox${index}`,
               firstName: it.name.first,
               lastName: it.name.last,
-              age: it.dob.age
+              age: it.dob.age,
+              active: false
             }
           })
         )
@@ -43,22 +28,11 @@ const DummyView = () => {
     getUsers()
   }, []) // eslint-disable-line
 
-  // const checkArray = users.map((it, index) => {
-  //   return {
-  //     id: `checkbox${index}`,
-  //     firstName: it.name.first,
-  //     lastName: it.name.last,
-  //     age: it.dob.age
-  //   }
-  // })
-
-  // const [checked, setChecked] = useState(false)// eslint-disable-line
-  const getInputChecked = () => {
-    // const checked = e.target.value
-    // setUsers(checkArray.map((data) => {
-    // return
-    // }
+  const getInputChecked = (e) => {
+    console.log(e.target.checked)// eslint-disable-line
+    console.log(e.target.id)// eslint-disable-line
   }
+
   console.log(users) // eslint-disable-line
 
   return (
