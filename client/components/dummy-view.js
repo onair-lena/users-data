@@ -26,14 +26,20 @@ const DummyView = () => {
 
   useEffect(() => {
     getUsers()
-  }, []) // eslint-disable-line
+  }, [])
 
   const getInputChecked = (e) => {
-    console.log(e.target.checked)// eslint-disable-line
-    console.log(e.target.id)// eslint-disable-line
+    setUsers(
+      users.map((it) => {
+        if (it.id === e.target.id) {
+          return { ...it, active: e.target.checked }
+        }
+        return { ...it }
+      })
+    )
   }
 
-  console.log(users) // eslint-disable-line
+  // console.log(users) // eslint-disable-line
 
   return (
     <div className="w-3/4 border border-solid border-gray-800">
