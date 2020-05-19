@@ -18,7 +18,8 @@ const DummyView = () => {
               firstName: it.name.first,
               lastName: it.name.last,
               age: it.dob.age,
-              active: false
+              active: false,
+              checkedUser: ''
             }
           })
         )
@@ -32,14 +33,15 @@ const DummyView = () => {
     setUsers(
       users.map((it) => {
         if (it.id === e.target.id) {
-          return { ...it, active: e.target.checked }
+          console.log('it', it.firstName) // eslint-disable-line
+          return { ...it, active: e.target.checked, checkedUser: it.firstName }
         }
         return { ...it }
       })
     )
   }
 
-  // console.log(users) // eslint-disable-line
+  console.log(users) // eslint-disable-line
 
   return (
     <div className="w-3/4 border border-solid border-gray-800">
@@ -62,27 +64,40 @@ const DummyView = () => {
       </div>
       {users.map((it) => (
         <div className="flex flex-row justify-around text-center">
-          <div className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2">
+          <div
+            className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2"
+            key={it.id}
+          >
             <input
+              key={it.id}
               type="checkbox"
               checked={it.active}
               id={it.id}
               onChange={getInputChecked} // eslint-disable-line
             />
           </div>
-          <div className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2">
+          <div
+            className="border border-solid border-gray-800 min-w-150 text-black font-bold shadow-lg p-2 m-2"
+            key={it.firstName}
+          >
             {it.firstName}
           </div>
-          <div className="border border-solid border-gray-800 min-w-200 text-black font-bold shadow-lg p-2 m-2">
+          <div
+            className="border border-solid border-gray-800 min-w-200 text-black font-bold shadow-lg p-2 m-2"
+            key={it.lastName}
+          >
             {it.lastName}
           </div>
-          <div className="border border-solid border-gray-800 min-w-66 text-black font-bold shadow-lg p-2 m-2">
+          <div
+            className="border border-solid border-gray-800 min-w-66 text-black font-bold shadow-lg p-2 m-2"
+            key={it.age}
+          >
             {it.age}
           </div>
         </div>
       ))}
       <div className="bg-gray-300 w-full text-black font-bold shadow-lg p-4">
-        users checked: {111}
+        users checked: {users.map((it) => it.checkedUser)}
       </div>
     </div>
   )
