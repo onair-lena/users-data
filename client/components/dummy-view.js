@@ -41,7 +41,16 @@ const DummyView = () => {
     )
   }
 
-  console.log(users) // eslint-disable-line
+  const showUsers = () => {
+    return users.reduce((acc, rec) => {
+      if (acc.length === 0) {
+        return rec.checkedUser
+      }
+      return rec.checkedUser !== '' ? `${acc}, ${rec.checkedUser}` : `${acc}`
+    }, '')
+  }
+
+  console.log('users', users) // eslint-disable-line
 
   return (
     <div className="w-3/4 border border-solid border-gray-800">
@@ -97,7 +106,7 @@ const DummyView = () => {
         </div>
       ))}
       <div className="bg-gray-300 w-full text-black font-bold shadow-lg p-4">
-        users checked: {users.map((it) => it.checkedUser)}
+        users checked: {showUsers()}
       </div>
     </div>
   )
