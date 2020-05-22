@@ -29,12 +29,19 @@ const DummyView = () => {
     getUsers()
   }, [])
 
+  const checkedUser = (value) => {
+    if (value.active !== true) {
+      return value.firstName
+    }
+    return ''
+  }
+
   const getInputChecked = (e) => {
     setUsers(
       users.map((it) => {
         if (it.id === e.target.id) {
-          console.log('it', it.firstName) // eslint-disable-line
-          return { ...it, active: e.target.checked, checkedUser: it.firstName }
+          console.log('active', e.target.checked) // eslint-disable-line
+          return { ...it, active: e.target.checked, checkedUser: checkedUser(it) }
         }
         return { ...it }
       })
