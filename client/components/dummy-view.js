@@ -40,10 +40,22 @@ const DummyView = () => {
     setUsers(
       users.map((it) => {
         if (it.id === e.target.id) {
-          console.log('active', e.target.checked) // eslint-disable-line
+          // console.log('active', e.target.checked) // eslint-disable-line
           return { ...it, active: e.target.checked, checkedUser: checkedUser(it) }
         }
         return { ...it }
+      })
+    )
+  }
+
+  const getAllChecked = (e) => {
+    setUsers(
+      users.map((it) => {
+        if (e.target.checked === true) {
+          console.log('active', e.target.checked) // eslint-disable-line
+          return { ...it, active: true, checkedUser: checkedUser(it) }
+        }
+        return { ...it, active: false, checkedUser: '' }
       })
     )
   }
@@ -57,6 +69,13 @@ const DummyView = () => {
     }, '')
   }
 
+  const checkedLine = (value) => {
+    if (value.active === true) {
+      return 'bg-gray-300'
+    }
+    return ''
+  }
+
   console.log('users', users) // eslint-disable-line
 
   return (
@@ -65,7 +84,7 @@ const DummyView = () => {
       <div className="items-center">
         <div className="flex flex-row justify-around text-center bg-gray-300">
           <div className="border border-solid border-gray-800 bg-gray-400 min-w-56 text-black font-bold shadow-lg p-2 m-2">
-            <input type="checkbox" className="text-center" />
+            <input type="checkbox" className="text-center" onChange={getAllChecked} />
           </div>
           <div className="border border-solid border-gray-800 bg-gray-400 min-w-150 text-black font-bold shadow-lg p-2 m-2">
             First Name
@@ -79,7 +98,7 @@ const DummyView = () => {
         </div>
       </div>
       {users.map((it) => (
-        <div className="flex flex-row justify-around text-center">
+        <div className={`flex flex-row justify-around text-center ${checkedLine(it)}`}>
           <div
             className="border border-solid border-gray-800 min-w-56 text-black font-bold shadow-lg p-2 m-2"
             key={it.id}
